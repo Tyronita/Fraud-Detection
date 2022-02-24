@@ -1,0 +1,260 @@
+<!-- HTML comment syntax btw: this brings in our base structure -->
+{% extends 'base.html' %} 
+
+{% block head %}
+    <title>Dashboard | Fraud Detection </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="columns-container">
+
+        <!-- First column -->
+        <div class="column">
+
+            <div class="undecided-records-container">
+
+                <!-- Filter Table Form -->
+                <form action="/" method="GET" id="filterTableForm"> 
+
+                    <h3>Filter Transactions</h3>
+
+                    <!-- Start Date Time -->
+
+                    <label for="start_date">Start Date:</label>
+                    <input type="date" name="start_date" min="2013-09-01" max="2013-09-02"> 
+
+                    <label for="end_date">End Date:</label>
+                    <input type="date" name="end_date" min="2013-09-01" max="2013-09-02"> <br>   
+
+                    <label for="start_time">Start Time:</label>
+                    <input type="time" name="start_time" step="1"> 
+
+                    <label for="end_time">End Time:</label>
+                    <input type="time" name="end_time" step="1"> <br>
+
+                    <!-- Select the type of datetime range search -->
+
+                    <label for="entire_period">Entire Period Search:</label>
+                    <input type="radio" name="time_search_type" value="entire_period" checked>
+                    
+                    <label for="daily_interval">Daily Interval Search:</label>
+                    <input type="radio" name="time_search_type" value="daily_interval"> <br>
+            
+                    <!-- Amount -->
+                    <label for="min_amount">Minimum Amount (&#128;)</label>
+                    <input type="number" name="min_amount" min="0">
+            
+                    <label for="max_amount">Maximum Amount (&#128;)</label>
+                    <input type="number" name="max_amount" min="0"> <br>
+            
+                    <!-- Predicted Probability -->
+            
+                    <label for="min_probability">Minimum Probability</label>
+                    <input type="number" name="min_probability" min="0" max="1" step="0.05">
+            
+                    <label for="max_probability">Maximum Probability</label>
+                    <input type="number" name="max_probability" min="0" max="1" step="0.05"> <br>
+            
+                    <!-- Decided Class -->
+            
+                    <span>Class:</span>
+                    <input class="classificationCheckbox" type="checkbox" name="fraud" data-classification = 1 onclick="return atLeastOneChecked()" checked>
+                    <label for="fraud">Fraud (1)</label>
+
+                    <input class="classificationCheckbox" type="checkbox" name="non_fraud" data-classification = 0 onclick="return atLeastOneChecked()" checked>
+                    <label for="non_fraud">Non-fraud (0)</label>
+
+                    <input class="classificationCheckbox" type="checkbox" name="undecided" data-classification = nan onclick="return atLeastOneChecked()" checked>       
+                    <label for="undecided">Undecided (Nan)</label><br><br>
+
+                    <!-- Submit form button -->
+                    <button id="filter-button">Filter</button>
+                </form>
+                <p id="errorMessage"></p>
+
+                <!-- Number of rows displayed out of total -->
+                <p>{{ row_data|length }} shown out of {{ databaseLength }} transactions in the database.</p>
+
+                <!-- Table of all/filtered transactions -->
+                <table>
+                    <thead>
+                        <tr>
+                            <!-- Print every heading -->
+                            {% for header in table_headings %}
+                                <th> {{ header }} </th>
+                            {% endfor %}
+                            <th>Info</th>
+                            <th>Classify</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Iterate over every row -->
+                        {% for row in row_data %}
+                            <tr>
+                                <!-- Iterate over every cell -->
+                                {% for cell in row %}
+                                    <td>
+                                        <!-- Selection statememnt to format floating point values to 2.d.p -->
+                                        {% if cell is float %}
+                                            {{ '%0.2f'| format(cell|float) }}
+                                        {% else %}
+                                            {{ cell }}
+                                        {% endif %}
+                                    </td>
+                                {% endfor %}
+                                <td>
+                                    <button class="launch-modal-button" data-transactionid = "{{ row[0] }}">
+                                        <i class="fas fa-info"></i>
+                                    </button>
+                                </td> 
+                                <td>
+                                    <!-- Classify particular row-->
+                                    <button class="classify-button" data-transactionid = "{{ row[0] }}" data-classification = 1>1</button>
+                                    <button class="classify-button" data-transactionid = "{{ row[0] }}" data-classification = 0>0</button>
+                                    <button class="classify-button" data-transactionid = "{{ row[0] }}" data-classification = nan>None</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>  
+        </div>
+
+        <!-- Second column -->
+        <div class="column">
+
+            <!-- Timeseries graph -->
+            <div class="graph-container">
+
+                <!-- Print graph if it is successfully passed-->
+                {% if timeseriesImg != None %}
+                    <img src="data:image/png;base64,{{ timeseriesImg }}" id="timeseries">
+                {% endif %}
+
+                <div class="date-selector-container">
+                    <label>Date: </label>
+                    <input type="date" min="2013-09-01" max="2013-09-02" value = "2013-09-02" id="date-selector">
+                </div> 
+            </div>
+
+            <!-- Scatter graph -->
+            <div class="graph-container">
+
+                <!-- Print graph if it is successfully passed-->
+                {% if scatterImg != None %}
+                    <img src="data:image/png;base64,{{ scatterImg }}" id="scatter">
+                {% endif %}
+
+                <div class="axis-selectors-conatiner">
+                    <div>
+                        <!-- X-axis of 2 variable scatter plot -->
+                        <label for="x-axis">X-axis: </label>
+
+                        <select name="x-axis" id="x-axis" class="axis-selector">
+                            {% for feature in modal_data_headings[1:] %}
+                                {% if feature == 'V14' %}
+                                    <option value = "V14" selected="selected"> V14 </option>        
+                                {% else %}
+                                    <option value = "{{ feature }}"> {{ feature }} </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                                        
+                    <div>
+                        <!-- Y-axis of 2 variable scatter plot -->
+                        <label for="y-axis">Y-axis: </label>
+                        
+                        <select name="y-axis" id="y-axis" class="axis-selector"> 
+                            {% for feature in modal_data_headings[1:] %}
+                                {% if feature == 'V11' %}
+                                    <option value = "V11" selected="selected"> V11 </option>        
+                                {% else %}
+                                    <option value = "{{ feature }}"> {{ feature }} </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal content -->
+    <div class="bg-modal">
+
+        <div class="modal-content">
+
+            <!-- Close Pop up Button -->
+            <span class="close">&times;</span>
+            
+            <!-- Data Fields for transaction -->
+            {% for header in modal_data_headings %}
+                <div class="details-field-conatiner">
+                    <h4> {{ header }} </h4>
+                    <p class="details-field-value"></p>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+    <!-- Script which enables filtering -->
+    <script src="{{ url_for('static', filename='js/filter.js') }}"></script>
+
+    <!-- Script which enables POST requests to classify transactions -->
+    <script src="{{ url_for('static', filename='js/classify.js') }}"></script>
+
+    <!-- Script which enables GET requests to display graph data-->
+    <script src="{{ url_for('static', filename='js/graphs.js') }}"></script>
+
+    <!-- Script which enables modal window to pop up with transaction data -->
+    <script>
+
+        // Access the detailsTable passed from flask. Convert from JSON to an array.
+        detailsTable = JSON.parse('{{ modal_data_table}}')
+
+        // Get the modal background
+        const modal = document.querySelector(".bg-modal");
+
+        const launchModalButtons = document.getElementsByClassName("launch-modal-button");
+        for (i = 0; i < launchModalButtons.length; i++) {
+            launchModalButtons[i].addEventListener("click", function(e) {
+
+                // Retrieve the data of the record to update from the HTML attrs
+                const transactionID = e.target.dataset.transactionid
+
+                // Details yable declared gloabally from index.html script file
+                const record = detailsTable.find(record => record[0] == transactionID );
+                
+                // Select elements where the field values will
+                const detailsFieldEls = document.querySelectorAll(".details-field-value")
+
+                for (i = 0; i < detailsFieldEls.length; i++) {
+                    // If floating point, round value to 2.d.p
+                    fieldDataValue = Number.isInteger(record[i]) ? record[i] : record[i].toFixed(2)
+                    // Update records values
+                    detailsFieldEls[i].innerText = fieldDataValue
+                };
+                // Launch Modal
+                modal.style.display = "block";
+            });
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        document.querySelector('.close').onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Apply a active colour
+        document.querySelectorAll('.sidebar li a')[0].className = "active"
+    
+    </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/91c3acf03e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/evaluation.css') }}">
+    <title>Dashboard | Fraud Detection </title>
+</head>
+<body>
+    <!-- Modal Style Evaluation Card -->
+    <div class="evaluation-container">
+        
+        <h1>Performance Evaluation</h1>
+        <div class="evaluation-cards">
+
+            <!-- Confusion Matrix and Evaluation Card for the Model -->
+            <section>        
+                <h3>Model Success</h3>
+                <img src="data:image/png;base64,{{ predConfMatrixImg }}" class="cf_matrix">
+                <p><strong>Recall:</strong> {{ '%0.3f'| format(modelEval["recall"]|float) }} </p>
+                <p><strong>Precision:</strong> {{ '%0.3f'| format(modelEval["precision"]|float) }} </p>
+            </section>
+
+            <!-- Confusion Matrix and Evaluation Card for the Analyst -->
+            <section>
+                <h3>User Success</h3>
+                <img src="data:image/png;base64,{{ decConfMatrixImg }}" class="cf_matrix">
+                <p><strong>Recall:</strong> {{ '%0.3f'| format(userEval["recall"]|float) }} </p>
+                <p><strong>Precision:</strong> {{ '%0.3f'| format(userEval["precision"]|float) }} </p>
+            </section>
+
+        </div>
+        <a href="{{ url_for('index') }}" class="btn btn-return">Back to dashboard.</a>
+    </div>
+</body>

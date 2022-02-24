@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    
+    <script src="https://kit.fontawesome.com/91c3acf03e.js" crossorigin="anonymous"></script>
+    
+    {% block head %}{% endblock %}
+    </head>
+        <header class="header-container">
+            <div class="logo-container">
+                <h1>Fraud Detect</h1>
+            </div>
+            <a class="btn btn-danger" href="{{ url_for('reset') }}">Reset</a>
+        </header>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+    </html>

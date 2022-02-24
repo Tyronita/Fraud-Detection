@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+html, body{
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.evaluation-container {
+    background-color: rgb(243, 243, 243);
+    text-align: center;
+    height: 630px;
+    min-width: 1000px;
+    width: 70%;
+    max-width: 1450px;
+    padding: 0px 5px;
+    border-radius: 15px;
+}
+
+.evaluation-cards {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: white;
+}
+
+.cf_matrix {
+    padding: 0;
+    width: 450px;
+    transform: scale(1.05)
+}
+
+.btn-return {
+    color: #fff;
+    background-color: #007bff;
+    position: relative;
+    top: 20px;
+}
+
+.btn-return:hover {
+    background-color: #0063ce;;
+}

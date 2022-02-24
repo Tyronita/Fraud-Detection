@@ -1,0 +1,181 @@
+/* Base content */
+
+html, body{
+    background-color: #eee;
+}
+/* Container */
+.container {
+    margin: 0;
+    display: flex;
+    height: 100%;
+}
+
+/* Header section */
+
+.header-container {
+    background:#7057dd;
+    height: 55px;
+}
+
+header > {
+    display: flex;
+}
+
+.logo-container {
+    color: #fae630;
+    padding: 10px 0 12px 5px;
+    font-weight: 0;
+    float: left;
+}
+
+.logo-container h1 {
+    font-size: 1.7em;
+    margin: 0 5px;
+}
+
+.btn-danger {
+    color: #ff0019;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: #dc3545 1px solid;
+    font-weight: 600;
+    margin: 10px 12px;
+    opacity: 0.85;
+    float: right;
+}
+
+.btn-danger:hover {
+    opacity: 1;
+    background-color: #c72d3d;
+    border: #c72d3d 1px solid;
+    color: white;
+}
+
+/* Main content and page layout */
+
+.columns-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.column, .main-container {
+    margin: 1em 0.5em;
+    height: 100%;
+}
+
+/* Graphs */
+#timeseries, #scatter {
+    width: 400px;
+}
+
+.graph-container {
+    background-color: white;
+    margin-bottom: 1.3em;
+    border-radius: 8px ;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+.axis-selectors-conatiner, .date-selector-container {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+    color: #4e4e4e;
+}
+
+.axis-selectors-conatiner select, .graph-container input{
+    margin-left: 4px;
+    margin-right: 1.5em;
+    color: #4e4e4e;
+}
+
+/* Modal window */
+.details-field-conatiner {
+    display: inline-block;
+    padding: 5px;
+    margin: 0 15px;
+}
+
+/* Modal Popup */
+.bg-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    width: 50%;
+    padding: 0 10px;
+    margin: 15% auto;
+    background-color: white;
+} 
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* sidebar */
+
+.active {
+    color: blue;
+}
+
+/* Table */
+
+.undecided-records-container {
+    padding: 1em 1.5em;
+    background-color: white;
+    border-radius: 10px ;
+    border-collapse: collapse;
+}
+
+.undecided-records-container h3 {
+    margin-top: 0;
+}
+
+table {
+    margin: 20px 0px;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+thead tr {
+    background-color: #009879;  /* #436cdb */
+    color: #fff;
+    text-align: left;
+    font-weight: bold;
+}
+
+th, td {
+    padding: 12px 15px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
