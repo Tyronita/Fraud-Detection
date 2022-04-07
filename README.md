@@ -16,14 +16,16 @@ Make sure Python and pip are installed prior to setup.
 2. Go to Web App\Dataset directory on file explorer, extract creditcard.zip, and move the file creditcard.csv into the 'dataset' folder. 
    This file was compressed so the repository didn't exceed Github's maximum file size limit of 100mb.
    
-3. In the command line (Windows) or terminal (Mac OS):
-   * Pip install the 'virtualenv' package.
-   * Navigate to the directory where you cloned the repository using "cd ...\Fraud Detection"
+3. Open the command line (Windows) or terminal (Mac OS)
 
-5. Activate the virtual environment using the command: "Web App\env\Scripts\activate".
+4. Pip install the 'virtualenv' package.
 
-6. Navigate to the main 'webapp' directory using "cd Webapp".
+5. Navigate to the directory where you cloned the repository using "cd ...\Fraud Detection"
 
-7. Run the program with "python app.py".
+6. Activate the virtual environment using the command: "Web App\env\Scripts\activate".
 
-8. Wait until the url for the webapp to appear, and copy it from the command line into the browser.
+7. Navigate to the main 'webapp' directory using "cd Webapp".
+
+8. Run the program with "python app.py".
+
+9. Wait until the url for the webapp to appear, and copy it from the command line into the browser.
