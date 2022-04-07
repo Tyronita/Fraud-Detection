@@ -28,4 +28,6 @@ Make sure Python and pip are installed prior to setup.
 
 8. Run the program with "python app.py".
 
-9. Wait until the url for the webapp to appear, and copy it from the command line into the browser.
+9. Wait until the url for the webapp to display in the command line, copy it into the browser.
+
+The Webapp will be loaded ready for use.
