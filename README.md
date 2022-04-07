@@ -20,14 +20,12 @@ Make sure Python and pip are installed prior to setup.
 
 4. Pip install the 'virtualenv' package.
 
-5. Navigate to the directory where you cloned the repository using "cd ...\Fraud Detection"
+5. Navigate to the directory where you cloned the repository using "cd ...\Fraud Detection\Web App"
 
-6. Activate the virtual environment using the command: "Web App\env\Scripts\activate".
-
-7. Navigate to the main 'webapp' directory using "cd Webapp".
+6. Activate the virtual environment using the command: "env\Scripts\activate".
 
 8. Run the program with "python app.py".
 
 9. Wait until the url for the webapp to display in the command line, copy it into the browser.
 
-The Webapp will be loaded ready for use.
+The Webapp will be loaded in the browser ready for use. Make sure you have JavaScript enabled in the browser.
