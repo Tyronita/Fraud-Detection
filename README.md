@@ -23,7 +23,7 @@ Make sure Python and pip are installed prior to setup.
 5. Navigate to the directory where you cloned the repository using "cd ...\Fraud Detection\Web App"
 
 6. Activate the virtual environment using the command: "env\Scripts\activate".
-   If this fails pip install the following packages: 
+   If this fails pip install the following packages: <br>
    **numpy, matplotlib, seaborn, pandas, time, BytesIO**
 
 8. Launch the webapp with "python app.py".
