@@ -28,7 +28,7 @@ Make sure Python and pip are installed prior to setup.
 
 8. Launch the webapp with "python app.py".
 
-9. Wait until the url for the webapp to display in the command line, copy it into the browser.
-   Note this might take some time
+9. Wait until the url for the webapp to display in the command line, copy it into the browser.<br>
+   **Note this might take some time as the ML model trains for the first time on launch.**
 
 The Webapp will be loaded in the browser ready for use. Make sure you have JavaScript enabled in the browser.
